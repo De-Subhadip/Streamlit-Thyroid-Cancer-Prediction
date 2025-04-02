@@ -28,7 +28,7 @@ with st.container(height=10, border=False):
 st.write(
     "The model used for predicting the diagnosis is a **Logistic Regression** model with all the default parameter values. Grid Search was performed\
     on the dataset with 20 cross-validation sets to find the parameters that yielded the highest accuracy. The numeric columns were scaled using a\
-    **MinMaxScaler**, and the categorical columns were **one-hot encoded**. **Ordinal encoding** was used on the ***Thyroid_Cancer_Risk*** columns as it contained\
+    **MinMaxScaler**, and the categorical columns were **one-hot encoded**. **Ordinal encoding** was used on the ***Thyroid_Cancer_Risk*** column as it contained\
     the following values: ***Low***, ***Medium***, ***High***."
 )
 
@@ -171,7 +171,7 @@ try:
     predProb = LR.predict_proba(dfPred)
     n = np.argmax(predProb, axis=1)
     chance = predProb[0][n]
-    chance = np.round(chance, 3)
+    chance = 100*np.round(chance, 3)
 
 
 
@@ -185,10 +185,10 @@ try:
 
         if pred == 1:
             st.session_state.predText = ":red[Thyroid is Malignant]:warning:"
-            st.session_state.predProbText = f":red[**Probability of being malignant:**] **:red{chance}**"
+            st.session_state.predProbText = f":red[**Probability of being malignant:**] **:red{chance}:red[%]**"
         else:
             st.session_state.predText = ":green[Thyroid is Benign]:large_green_circle:"
-            st.session_state.predProbText = f":green[**Probability of being Benign:**] **:green{chance}**"
+            st.session_state.predProbText = f":green[**Probability of being Benign:**] **:green{chance}:green[%]**"
 
 
     _, _, _, button_col, _, _, _ = st.columns(7)
